@@ -1,0 +1,70 @@
+#
+# Description
+# -----------
+#
+# Fields
+# ------
+# id:                       The ID assigned to the record.
+# uuid:                     The Universal Unique ID.
+# tnid:                     The Tenant ID the record belongs to.
+#
+# subcategory_id:           The ID of the subcategory the item is in.
+#
+# name:                     The name of the item.
+# permalink:                The permalink for the item for urls
+# 
+# restype:                  The type of item
+#                               10 - File 
+#                               20 - Image ** future **
+#                               30 - Video URL (Youtube or Vimeo)
+#                               50 - Link ** future **
+#
+# url:                      The URL to the resource (video)
+# org_filename:             The original filename of the uploaded file or image
+#
+# flags:                    The options for the resource.
+#
+#                               0x01 - 
+#                               0x02 - 
+#                               0x04 - 
+#                               0x08 - 
+#
+# sequence:                 The order to display the item in the subcategory.
+#
+# thumbnail_image_id:       The ID of the image to use as the thumbnail.
+# synposis:                 The synopsis of the resource.
+# description:              The full description for the resource.
+#
+# additional_keywords:      The additional keywords to be used for searching.
+# keywords:                 The keyworks for the resource, includes category, subcat and tags. This is used for searching.
+#
+# date_added:               The UTC date and time the record was added.
+# last_updated:             The UTC date and time the record was last update.
+#
+create table ciniki_reslib_items (
+    id int not null auto_increment,
+    uuid char(36) not null,
+    tnid int not null,
+
+    subcategory_id int not null,
+    name varchar(250) not null,
+    permalink varchar(250) not null,
+    restype tinyint unsigned not null,
+    url varchar(250) not null,
+    org_filename varchar(250) not null,
+    flags int not null,
+    sequence int not null,
+    thumbnail_image_id int not null,
+    synopsis text not null,
+    description text not null,
+    additional_keywords varchar(1000) not null,
+    keywords varchar(5000) not null,
+
+    date_added datetime not null,
+    last_updated datetime not null,
+    primary key (id),
+    unique index (uuid),
+    index (subcategory_id, name, permalink, restype),
+    index (keywords),
+    index sync (tnid, uuid, last_updated)
+) ENGINE='InnoDB', COMMENT='v1.01';

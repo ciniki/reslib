@@ -1,0 +1,52 @@
+#
+# Description
+# -----------
+# This table stores the sections for the resource library.
+#
+# Fields
+# ------
+# id:                       The ID assigned to the record.
+# uuid:                     The Universal Unique ID.
+# tnid:                     The Tenant ID the record belongs to.
+#
+# name:                     The Name of the section.
+# permalink:                The permalink of the section.
+#
+# flags:                    The options for the section.
+#
+#                               0x01 - 
+#                               0x02 - 
+#                               0x04 - 
+#                               0x08 - 
+#
+# sequence:                 The order to display the section.
+#
+# image_id:                 The image to use for the section.
+# synopsis:                 The short description of the section.
+# description:              The full description/intro for the section.
+# customer_perms:           The list of customer permission tags (ciniki_customer_tags, type 30), double colon delimited, alphabetised
+#
+# date_added:               The UTC date and time the record was added.
+# last_updated:             The UTC date and time the record was last update.
+#
+create table ciniki_reslib_sections (
+    id int not null auto_increment,
+    uuid char(36) not null,
+    tnid int not null,
+
+    name varchar(250) not null,
+    permalink varchar(250) not null,
+    image_id int not null,
+    flags int not null,
+    sequence int not null,
+    synopsis text not null,
+    description text not null,
+    customer_perms varchar(1000) not null,
+
+    date_added datetime not null,
+    last_updated datetime not null,
+    primary key (id),
+    unique index (uuid),
+    unique index (tnid, permalink),
+    index sync (tnid, uuid, last_updated)
+) ENGINE='InnoDB', COMMENT='v1.01';

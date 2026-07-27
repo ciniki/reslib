@@ -21,9 +21,12 @@ function ciniki_reslib_wng_process(&$ciniki, $tnid, &$request, $section) {
         return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.reslib.8', 'msg'=>'No section specified.'));
     }
 
-    if( $section['ref'] == 'ciniki.reslib.xxx' ) {
-        ciniki_core_loadMethod($ciniki, 'ciniki', 'reslib', 'wng', 'xxxProcess');
-        return ciniki_reslib_wng_xxxProcess($ciniki, $tnid, $request, $section);
+    if( $section['ref'] == 'ciniki.reslib.section' ) {
+        ciniki_core_loadMethod($ciniki, 'ciniki', 'reslib', 'wng', 'sectionProcess');
+        return ciniki_reslib_wng_sectionProcess($ciniki, $tnid, $request, $section);
+    } elseif( $section['ref'] == 'ciniki.reslib.category' ) {
+        ciniki_core_loadMethod($ciniki, 'ciniki', 'reslib', 'wng', 'categoryProcess');
+        return ciniki_reslib_wng_categoryProcess($ciniki, $tnid, $request, $section);
     }
 
     return array('stat'=>'ok');
