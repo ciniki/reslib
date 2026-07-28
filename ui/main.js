@@ -104,16 +104,16 @@ function ciniki_reslib_main() {
                     },
                 },
             },
-        'search':{'label':'', 'type':'livesearchgrid', 'livesearchcols':3,
+        'search':{'label':'', 'type':'livesearchgrid', 'livesearchcols':2,
             'cellClasses':[''],
             'hint':'Search items',
             'noData':'No items found',
-            'headerValues':['Thumb', 'Name', 'Resource'],
-            'cellClasses':['image', '', ''],
+            'headerValues':['Name', 'Resource'],
+            'cellClasses':['', ''],
             },
-        'items':{'label':'Items', 'type':'simplegrid', 'num_cols':3,
-            'headerValues':['', 'Name', 'Resource'],
-            'cellClasses':['image', '', ''],
+        'items':{'label':'Items', 'type':'simplegrid', 'num_cols':2,
+            'headerValues':['Name', 'Resource'],
+            'cellClasses':['', ''],
             'noData':'No Items',
             'seqDrop':function(e,from,to) {
                 M.api.getJSONCb('ciniki.reslib.itemUpdate', {'tnid':M.curTenantID, 
@@ -170,7 +170,7 @@ function ciniki_reslib_main() {
             }
         }
         if( s == 'items' || s == 'search' ) {
-            if( j == 0 ) {
+/*            if( j == 0 ) {
                 if( d.thumbnail_image_id > 0 ) {
                     if( d.image != null && d.image != '' ) {
                         return '<img width="30px" height="30px" src=\'' + d.image + '\' />'; 
@@ -180,10 +180,10 @@ function ciniki_reslib_main() {
                 } else {
                     return '<img width="25px" height="25px" src=\'/ciniki-mods/core/ui/themes/default/img/noimage_75.jpg\' />';
                 }
-            }
+            } */
             switch(j) {
-                case 1: return d.name;
-                case 2: return d.resource;
+                case 0: return d.name;
+                case 1: return d.resource;
                 }
         }
     }

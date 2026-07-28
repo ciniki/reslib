@@ -96,13 +96,15 @@ function ciniki_reslib_itemSearch($ciniki) {
         } else {
             $items[$iid]['resource'] = $item['url'];
         }
+        $items[$iid]['thumbnail'] = '';
         if( isset($item['thumbnail_image_id']) && $item['thumbnail_image_id'] > 0 ) {
-            $rc = ciniki_images_hooks_loadThumbnail($ciniki, $args['tnid'], 
+            $items[$iid]['thumbnail'] = 'Yes';
+/*            $rc = ciniki_images_hooks_loadThumbnail($ciniki, $args['tnid'], 
                 array('image_id'=>$item['thumbnail_image_id'], 'maxlength'=>75, 'last_updated'=>$item['last_updated'], 'uuid'=>$item['uuid']));
             if( $rc['stat'] != 'ok' ) {
                 return $rc;
             }
-            $items[$iid]['image'] = 'data:image/jpg;base64,' . base64_encode($rc['image']);
+            $items[$iid]['image'] = 'data:image/jpg;base64,' . base64_encode($rc['image']); */
         }
     }
 

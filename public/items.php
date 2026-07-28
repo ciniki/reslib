@@ -249,13 +249,15 @@ function ciniki_reslib_items($ciniki) {
             } else {
                 $rsp['items'][$iid]['resource'] = $item['url'];
             }
+            $rsp['items'][$iid]['thumbnail'] = '';
             if( isset($item['thumbnail_image_id']) && $item['thumbnail_image_id'] > 0 ) {
-                $rc = ciniki_images_hooks_loadThumbnail($ciniki, $args['tnid'], 
+                $rsp['items'][$iid]['thumbnail'] = 'Yes';
+/*                $rc = ciniki_images_hooks_loadThumbnail($ciniki, $args['tnid'], 
                     array('image_id'=>$item['thumbnail_image_id'], 'maxlength'=>30, 'last_updated'=>$item['last_updated'], 'uuid'=>$item['uuid']));
                 if( $rc['stat'] != 'ok' ) {
                     return $rc;
                 }
-                $rsp['items'][$iid]['image'] = 'data:image/jpg;base64,' . base64_encode($rc['image']);
+                $rsp['items'][$iid]['image'] = 'data:image/jpg;base64,' . base64_encode($rc['image']); */
             }
         }
     }
