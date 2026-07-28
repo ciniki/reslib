@@ -45,15 +45,15 @@ function ciniki_reslib_main() {
             'cellClasses':['multiline'],
             'noData':'No category',
             'editFn':function(s,i,d) {
-                if( d != null && i > 0 ) {
+//                if( d != null && i > 0 ) {
                     return 'M.ciniki_reslib_main.category.open(\'M.ciniki_reslib_main.menu.open();\',\'' + d.id + '\');';
-                }
-                return '';
+//                }
+//                return '';
                 },
             'seqDrop':function(e,from,to){
-//                if( from == 0 || to == 0 ) {
-//                    return true;
-//                }
+                if( from == 0 || to == 0 ) {
+                    return true;
+                }
                 M.api.getJSONCb('ciniki.reslib.categoryUpdate', {'tnid':M.curTenantID, 
                     'category_id':M.ciniki_reslib_main.menu.data.categories[from].id,
                     'sequence':M.ciniki_reslib_main.menu.data.categories[to].sequence,
