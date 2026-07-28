@@ -251,7 +251,7 @@ function ciniki_reslib_items($ciniki) {
             }
             if( isset($item['thumbnail_image_id']) && $item['thumbnail_image_id'] > 0 ) {
                 $rc = ciniki_images_hooks_loadThumbnail($ciniki, $args['tnid'], 
-                    array('image_id'=>$item['thumbnail_image_id'], 'maxlength'=>75, 'last_updated'=>$item['last_updated'], 'uuid'=>$item['uuid']));
+                    array('image_id'=>$item['thumbnail_image_id'], 'maxlength'=>30, 'last_updated'=>$item['last_updated'], 'uuid'=>$item['uuid']));
                 if( $rc['stat'] != 'ok' ) {
                     return $rc;
                 }

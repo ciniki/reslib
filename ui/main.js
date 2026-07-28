@@ -112,7 +112,7 @@ function ciniki_reslib_main() {
             'cellClasses':['image', '', ''],
             },
         'items':{'label':'Items', 'type':'simplegrid', 'num_cols':3,
-            'headerValues':['Thumb', 'Name', 'Resource'],
+            'headerValues':['', 'Name', 'Resource'],
             'cellClasses':['image', '', ''],
             'noData':'No Items',
             'seqDrop':function(e,from,to) {
@@ -173,12 +173,12 @@ function ciniki_reslib_main() {
             if( j == 0 ) {
                 if( d.thumbnail_image_id > 0 ) {
                     if( d.image != null && d.image != '' ) {
-                        return '<img width="75px" height="75px" src=\'' + d.image + '\' />'; 
+                        return '<img width="30px" height="30px" src=\'' + d.image + '\' />'; 
                     } else {
-                        return '<img width="75px" height="75px" src=\'' + M.api.getBinaryURL('ciniki.images.get', {'tnid':M.curTenantID, 'image_id':d.image_id, 'version':'thumbnail', 'maxwidth':'75'}) + '\' />'; 
+                        return '<img width="30px" height="30px" src=\'' + M.api.getBinaryURL('ciniki.images.get', {'tnid':M.curTenantID, 'image_id':d.image_id, 'version':'thumbnail', 'maxwidth':'30'}) + '\' />'; 
                     }
                 } else {
-                    return '<img width="75px" height="75px" src=\'/ciniki-mods/core/ui/themes/default/img/noimage_75.jpg\' />';
+                    return '<img width="25px" height="25px" src=\'/ciniki-mods/core/ui/themes/default/img/noimage_75.jpg\' />';
                 }
             }
             switch(j) {
@@ -228,7 +228,7 @@ function ciniki_reslib_main() {
         this.open();
     }
     this.menu.resortItems = function(s) {
-        this.menu.open(null,'yes');
+        this.open(null,'yes');
     }
     this.menu.open = function(cb,resort) {
         var args = {'tnid':M.curTenantID};
