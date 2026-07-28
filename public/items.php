@@ -23,6 +23,7 @@ function ciniki_reslib_items($ciniki) {
         'section_id'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Section'),
         'category_id'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Category'),
         'subcategory_id'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Subcategory'),
+        'action'=>array('required'=>'no', 'blank'=>'yes', 'name'=>'Action'),
         ));
     if( $rc['stat'] != 'ok' ) {
         return $rc;
@@ -36,6 +37,41 @@ function ciniki_reslib_items($ciniki) {
     $rc = ciniki_reslib_checkAccess($ciniki, $args['tnid'], 'ciniki.reslib.items');
     if( $rc['stat'] != 'ok' ) {
         return $rc;
+    }
+
+    //
+    // Check for actions
+    //
+    if( isset($args['action']) && $args['action'] == 'resort' 
+        && isset($args['subcategory_id']) && $args['subcategory_id'] > 0
+        ) {
+        $strsql = "SELECT id, sequence "
+            . "FROM ciniki_reslib_items "
+            . "WHERE subcategory_id = '" . ciniki_core_dbQuote($ciniki, $args['subcategory_id']) . "' "
+            . "AND tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
+            . "ORDER BY name "
+            . "";
+        ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryArrayTree');
+        $rc = ciniki_core_dbHashQueryArrayTree($ciniki, $strsql, 'ciniki.reslib', array(
+            array('container'=>'items', 'fname'=>'id', 'fields'=>array('id', 'sequence')),
+            ));
+        if( $rc['stat'] != 'ok' ) {
+            return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.reslib.75', 'msg'=>'Unable to load items', 'err'=>$rc['err']));
+        }
+        $items = isset($rc['items']) ? $rc['items'] : array();
+        $sequence = 1;
+        foreach($items as $item) {
+            if( $item['sequence'] != $sequence ) {
+                ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectUpdate');
+                $rc = ciniki_core_objectUpdate($ciniki, $args['tnid'], 'ciniki.reslib.item', $item['id'], [
+                    'sequence' => $sequence,
+                    ], 0x04);
+                if( $rc['stat'] != 'ok' ) {
+                    return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.reslib.75', 'msg'=>'Unable to update the item', 'err'=>$rc['err']));
+                }
+            }
+            $sequence++;
+        }
     }
 
     $rsp = ['stat'=>'ok'];
@@ -105,7 +141,6 @@ function ciniki_reslib_items($ciniki) {
                 $rsp['categories'][$cid]['customer_perms'] = '';
             }
         }
-        array_unshift($rsp['categories'], ['id'=>0, 'name'=>'All']);
     }
 
     //
@@ -147,7 +182,7 @@ function ciniki_reslib_items($ciniki) {
     //
     // Get the list of items
     //
-    if( isset($args['section_id']) && $args['section_id'] > 0 ) {
+    if( isset($args['category_id']) && $args['category_id'] > 0 ) {
         $strsql = "SELECT sections.id AS section_id, "
             . "sections.name AS section_name, "
             . "categories.id AS category_id, "

@@ -5,7 +5,7 @@ function ciniki_reslib_main() {
     //
     // The panel to list the section
     //
-    this.menu = new M.panel('Resource Library', 'ciniki_reslib_main', 'menu', 'mc', 'large narrowaside', 'sectioned', 'ciniki.reslib.main.menu');
+    this.menu = new M.panel('Resource Library', 'ciniki_reslib_main', 'menu', 'mc', 'xlarge narrowaside', 'sectioned', 'ciniki.reslib.main.menu');
     this.menu.data = {};
     this.menu.nplist = [];
     this.menu.section_id = 0;
@@ -133,6 +133,10 @@ function ciniki_reslib_main() {
                     'label':'Add Item',
                     'fn':'M.ciniki_reslib_main.item.open(\'M.ciniki_reslib_main.menu.open();\',0,M.ciniki_reslib_main.menu.subcategory_id,null);',
                     },
+                'resort':{
+                    'label':'Sort Alphabetical',
+                    'fn':'M.ciniki_reslib_main.menu.resortItems(M.ciniki_reslib_main.menu.subcategory_id);',
+                    },
                 },
             },
     }
@@ -223,7 +227,10 @@ function ciniki_reslib_main() {
         this.subcategory_id = s;
         this.open();
     }
-    this.menu.open = function(cb) {
+    this.menu.resortItems = function(s) {
+        this.menu.open(null,'yes');
+    }
+    this.menu.open = function(cb,resort) {
         var args = {'tnid':M.curTenantID};
         if( this.section_id > 0 ) {
             args.section_id = this.section_id;
@@ -233,6 +240,9 @@ function ciniki_reslib_main() {
         }
         if( this.subcategory_id > 0 ) {
             args.subcategory_id = this.subcategory_id;
+        }
+        if( resort != null && resort == 'yes' ) {
+            args.action = 'resort';
         }
         M.api.getJSONCb('ciniki.reslib.items', args, function(rsp) {
             if( rsp.stat != 'ok' ) {
