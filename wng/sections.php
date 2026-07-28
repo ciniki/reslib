@@ -50,7 +50,7 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
                     ]],
                 ],
             ];
-        $sections['ciniki.reslib.category'] = [
+/*        $sections['ciniki.reslib.category'] = [
             'name' => 'Category',
             'module' => 'Resource Library',
             'settings' => [
@@ -61,7 +61,7 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
                     'options' => $categorylist,
                     ],
                 ],
-            ];
+            ]; */
     }
 
 
