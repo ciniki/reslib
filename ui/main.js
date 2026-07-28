@@ -748,7 +748,7 @@ function ciniki_reslib_main() {
                 'addDropImageRefresh':'',
              },
         }},
-        'general':{'label':'', 'aside':'yes', 'fields':{
+        'general':{'label':'Item', 'aside':'no', 'fields':{
             'subcategory_id':{'label':'Subcategory', 'type':'select', 'options':[], 'complex_options':{'value':'id', 'name':'name'}},
             'name':{'label':'Name', 'required':'yes', 'type':'text'},
             'restype':{'label':'Item Type', 'type':'toggle', 'default':'10', 
@@ -765,15 +765,13 @@ function ciniki_reslib_main() {
                 },
 //            'flags':{'label':'Options', 'type':'text'},
 //            'sequence':{'label':'Order', 'type':'text'},
+            'synopsis':{'label':'Synopsis', 'type':'textarea', 'size':'small'},
+            'additional_keywords':{'label':"Additional Keywords", 'type':'textarea', 'size':'small'},
             }},
-        '_synopsis':{'label':'Synopsis', 'fields':{
-            'synopsis':{'label':'', 'hidelabel':'yes', 'type':'textarea', 'size':'small'},
-            }},
+//        '_synopsis':{'label':'Synopsis', 'fields':{
+//            }},
         '_description':{'label':'Description', 'fields':{
             'description':{'label':'', 'hidelabel':'yes', 'type':'textarea', 'size':'large'},
-            }},
-        '_additional_keywords':{'label':'Additional Keywords', 'fields':{
-            'additional_keywords':{'label':'', 'hidelabel':'yes', 'type':'textarea', 'size':'small'},
             }},
         '_buttons':{'label':'', 'buttons':{
             'save':{'label':'Save', 'fn':'M.ciniki_reslib_main.item.save();'},

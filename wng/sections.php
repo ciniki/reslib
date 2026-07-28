@@ -47,6 +47,8 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
                 'layout' => ['label'=>'Format', 'type'=>'select', 'options'=>[
                     'tradingcards' => 'Trading Cards',
                     'tradingcards-subcatbuttons' => 'Trading Cards with Subcategory Buttons',
+                    'flexcards' => 'Flex Cards',
+                    'flexcards-subcatbuttons' => 'Trading Cards with Subcategory Buttons',
                     ]],
                 ],
             ];

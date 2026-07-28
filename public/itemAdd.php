@@ -49,6 +49,16 @@ function ciniki_reslib_itemAdd(&$ciniki) {
     }
 
     //
+    // Get the tenant storage directory
+    //
+    ciniki_core_loadMethod($ciniki, 'ciniki', 'tenants', 'hooks', 'storageDir');
+    $rc = ciniki_tenants_hooks_storageDir($ciniki, $args['tnid'], array());
+    if( $rc['stat'] != 'ok' ) {
+        return $rc;
+    }
+    $tenant_storage_dir = $rc['storage_dir'];
+
+    //
     // Setup permalink
     //
     if( !isset($args['permalink']) || $args['permalink'] == '' ) {

@@ -129,7 +129,9 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
     //
     // Setup the buttons for the trading cards to display list of subcategories
     //
-    if( isset($s['layout']) && $s['layout'] == 'tradingcards-subcatbuttons' ) {
+    if( isset($s['layout']) 
+        && ($s['layout'] == 'tradingcards-subcatbuttons' || $s['layout'] == 'flexcards-subcatbuttons')
+        ) {
         foreach($categories as $cid => $cat) {
             if( !isset($cat['subcats']) ) {
                 continue;
@@ -142,6 +144,7 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
                     ];
             }
             unset($categories[$cid]['subcats']);
+            $categories[$cid]['url'] = "{$base_url}/{$cat['permalink']}";
         }
     } else {
         foreach($categories as $cid => $cat) {
@@ -160,6 +163,11 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
             'type' => 'text',
             'title' => $s['title'],
             'content' => $s['content'],
+            ];
+    } elseif( isset($s['title']) && $s['title'] != '' ) {
+        $blocks[] = [
+            'type' => 'title',
+            'title' => $s['title'],
             ];
     }
     //
@@ -181,10 +189,18 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
             'button-3-url' => "{$base_url}/{$cat['permalink']}/videos",
             ];
     } */
-    $blocks[] = [
-        'type' => 'tradingcards',
-        'items' => $categories,
-        ];
+    if( isset($s['layout']) && $s['layout'] == 'flexcards-subcatbuttons' ) {
+        $blocks[] = [
+            'type' => 'flexcards',
+            'title-position' => 'overlay-bottomhalf',
+            'items' => $categories,
+            ];
+    } else {
+        $blocks[] = [
+            'type' => 'tradingcards',
+            'items' => $categories,
+            ];
+    }
 
     return array('stat'=>'ok', 'blocks'=>$blocks);
 }
