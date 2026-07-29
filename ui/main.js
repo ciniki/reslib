@@ -615,7 +615,7 @@ function ciniki_reslib_main() {
                 'customer_perms':{'label':'', 'hidelabel':'yes', 'type':'tags', 'add':'no', 'tags':[]},
             }},
         '_synopsis':{'label':'Synopsis', 'fields':{
-            'synopsis':{'label':'', 'hidelabel':'yes', 'type':'textarea', 'size':'large'},
+            'synopsis':{'label':'', 'hidelabel':'yes', 'type':'textarea', 'size':'small'},
             }},
         '_description':{'label':'Description', 'fields':{
             'description':{'label':'', 'hidelabel':'yes', 'type':'textarea', 'size':'large'},
