@@ -44,12 +44,26 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
                     'complex_options' => ['value'=>'id', 'name'=>'name'],
                     'options' => $sectionlist,
                     ],
-                'layout' => ['label'=>'Format', 'type'=>'select', 'options'=>[
-                    'tradingcards' => 'Trading Cards',
-                    'tradingcards-subcatbuttons' => 'Trading Cards with Subcategory Buttons',
+                'section-layout' => ['label'=>'Format', 'type'=>'select', 'options'=>[
                     'flexcards' => 'Flex Cards',
-                    'flexcards-subcatbuttons' => 'Trading Cards with Subcategory Buttons',
+                    'tradingcards' => 'Trading Cards',
                     ]],
+                'section-subcatbuttons' => ['label'=>'Card Subcategory Buttons', 'type'=>'toggle', 'default'=>'no', 'toggles'=>[
+                    'no' => 'No',
+                    'yes' => 'Yes',
+                    ]],
+                'subcat-image-ratio' => array('label' => 'Thumbnail Image Ratio', 
+                    'type'=>'select', 
+                    'default'=>'1-1', 
+                    'options'=>array(
+                        '2-1' => 'Panoramic',
+                        '16-9' => 'Letterbox',
+                        '6-4' => 'Wider',
+                        '4-3' => 'Wide',
+                        '1-1' => 'Square',
+                        '3-4' => 'Tall',
+                        '4-6' => 'Taller',
+                    )),
                 ],
             ];
 /*        $sections['ciniki.reslib.category'] = [

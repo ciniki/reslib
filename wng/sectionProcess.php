@@ -26,15 +26,7 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
     }
     $s = $section['settings'];
     $blocks = [];
-    $base_url = $request['ssl_domain_base_url'] . $request['page']['path'];
-
-    //
-    // Check for section
-    //
-    if( !isset($s['section-id']) ) {
-        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.reslib.13', 'msg'=>'No section specified'));
-    }
-    $section_id = $s['section-id'];
+    $base_url = $s['base_url'];
 
     //
     // Load the sections the web visitor has access to
@@ -62,9 +54,15 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
     $strsql = "SELECT sections.id, "
         . "sections.name, "
         . "sections.permalink "
-        . "FROM ciniki_reslib_sections AS sections "
-        . "WHERE id = '" . ciniki_core_dbQuote($ciniki, $section_id) . "' "
-        . $section_perms_sql        // Make sure customer has permission to this section
+        . "FROM ciniki_reslib_sections AS sections ";
+    if( isset($s['section-id']) ) {
+        $strsql .= "WHERE sections.id = '" . ciniki_core_dbQuote($ciniki, $s['section-id']) . "' ";
+    } elseif( isset($s['section-permalink']) ) {
+        $strsql .= "WHERE sections.permalink = '" . ciniki_core_dbQuote($ciniki, $s['section-permalink']) . "' ";
+    } else {
+        return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.reslib.13', 'msg'=>'No section specified'));
+    }
+    $strsql .= $section_perms_sql        // Make sure customer has permission to this section
         . "AND sections.tnid = '" . ciniki_core_dbQuote($ciniki, $tnid) . "' "
         . "";
     $rc = ciniki_core_dbHashQuery($ciniki, $strsql, 'ciniki.reslib', 'section');
@@ -79,6 +77,7 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
             ];
         return array('stat'=>'404', 'blocks'=>$blocks);
     }
+    $section_id = $rc['section']['id'];
     $reslib_section = $rc['section'];
     
     //
@@ -105,10 +104,10 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
         . "";
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'dbHashQueryIDTree');
     $rc = ciniki_core_dbHashQueryIDTree($ciniki, $strsql, 'ciniki.reslib', array(
-        array('container'=>'categories', 'fname'=>'id', 
+        array('container'=>'categories', 'fname'=>'permalink', 
             'fields'=>array('id', 'title'=>'name', 'permalink', 'image-id'=>'image_id', 'synopsis'),
             ),
-        array('container'=>'subcats', 'fname'=>'subcat_id', 
+        array('container'=>'subcats', 'fname'=>'subcat_permalink', 
             'fields'=>array('id'=>'subcat_id', 'name'=>'subcat_name', 'permalink'=>'subcat_permalink'),
             ),
         ));
@@ -129,9 +128,10 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
     //
     // Setup the buttons for the trading cards to display list of subcategories
     //
-    if( isset($s['layout']) 
-        && ($s['layout'] == 'tradingcards-subcatbuttons' || $s['layout'] == 'flexcards-subcatbuttons')
-        ) {
+//    if( isset($s['layout']) 
+//        && ($s['layout'] == 'tradingcards-subcatbuttons' || $s['layout'] == 'flexcards-subcatbuttons')
+//        ) {
+    if( isset($s['section-subcatbuttons']) && $s['section-subcatbuttons'] == 'yes' ) {
         foreach($categories as $cid => $cat) {
             if( !isset($cat['subcats']) ) {
                 continue;
@@ -170,34 +170,19 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
             'title' => $s['title'],
             ];
     }
+
     //
     // Display the list of categories using trading cards 
     //
-/*    foreach($categories as $cat) {
+    if( isset($s['section-layout']) && $s['section-layout'] == 'tradingcards' ) {
         $blocks[] = [
-            'type' => 'contentphoto',
-            'image-size' => 'small',
-            'image-position' => 'top-left',
-            'image-id' => $cat['image-id'],
-            'title' => $cat['title'],
-            'content' => $cat['synopsis'],
-            'button-1-text' => 'Forms',
-            'button-1-url' => "{$base_url}/{$cat['permalink']}/forms",
-            'button-2-text' => 'Syllabi',
-            'button-2-url' => "{$base_url}/{$cat['permalink']}/syllabi",
-            'button-3-text' => 'Videos',
-            'button-3-url' => "{$base_url}/{$cat['permalink']}/videos",
-            ];
-    } */
-    if( isset($s['layout']) && $s['layout'] == 'flexcards-subcatbuttons' ) {
-        $blocks[] = [
-            'type' => 'flexcards',
-            'title-position' => 'overlay-bottomhalf',
+            'type' => 'tradingcards',
             'items' => $categories,
             ];
     } else {
         $blocks[] = [
-            'type' => 'tradingcards',
+            'type' => 'flexcards',
+            'title-position' => 'overlay-bottomhalf',
             'items' => $categories,
             ];
     }

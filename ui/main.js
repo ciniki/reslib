@@ -770,7 +770,7 @@ function ciniki_reslib_main() {
             }},
 //        '_synopsis':{'label':'Synopsis', 'fields':{
 //            }},
-        '_description':{'label':'Description', 'fields':{
+        '_description':{'label':'Description', 'visible':'hidden', 'fields':{
             'description':{'label':'', 'hidelabel':'yes', 'type':'textarea', 'size':'large'},
             }},
         '_buttons':{'label':'', 'buttons':{
@@ -792,10 +792,13 @@ function ciniki_reslib_main() {
         if( t == 30 ) {
             this.sections.general.fields.url.visible = 'yes';
             this.sections.general.fields.org_filename.visible = 'no';
+            this.sections._description.visible = 'yes';
         } else {
             this.sections.general.fields.url.visible = 'no';
             this.sections.general.fields.org_filename.visible = 'yes';
+            this.sections._description.visible = 'hidden';
         }
+        this.showHideSection('_description');
         this.refreshFormField('general', 'url');
         this.refreshFormField('general', 'org_filename');
     }
