@@ -178,14 +178,23 @@ function ciniki_reslib_wng_subcategoryProcess(&$ciniki, $tnid, &$request, $secti
     }
 
     if( isset($s['title']) && $s['title'] != '' 
-        && isset($s['content']) && $s['content'] != '' 
+        && isset($s['subcategory-permalink']) 
+        && isset($reslib_subcategory['description']) && $reslib_subcategory['description'] != '' 
         ) {
+        $blocks[] = [
+            'type' => 'text',
+            'title' => $s['title'],
+            'content' => $reslib_subcategory['description'],
+            ];
+    } 
+    elseif( isset($s['title']) && $s['title'] != '' && isset($s['subcategory-id']) && isset($s['content']) && $s['content'] != '' ) {
         $blocks[] = [
             'type' => 'text',
             'title' => $s['title'],
             'content' => $s['content'],
             ];
-    } elseif( isset($s['title']) && $s['title'] != '' ) {
+    } 
+    elseif( isset($s['title']) && $s['title'] != '' ) {
         $blocks[] = [
             'type' => 'title',
             'title' => $s['title'],
