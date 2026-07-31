@@ -44,6 +44,16 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
                     'complex_options' => ['value'=>'id', 'name'=>'name'],
                     'options' => $sectionlist,
                     ],
+                'section-search' => ['label'=>'Section Search', 'type'=>'toggle', 'toggles'=>[
+                    'no' => 'No',
+                    'yes' => 'Yes',
+                    ]],
+                'section-search-layout' => ['label'=>'Search Format', 'type'=>'select', 'default'=>'auto', 'options'=>[
+                    'auto' => 'Auto',
+                    'table' => 'Table',
+                    'tradingcards' => 'Trading Cards',
+                    'flexcards' => 'Flex Cards',
+                    ]],
                 'section-layout' => ['label'=>'Format', 'type'=>'select', 'options'=>[
                     'flexcards' => 'Flex Cards',
                     'tradingcards' => 'Trading Cards',
@@ -64,6 +74,31 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
                         '3-4' => 'Tall',
                         '4-6' => 'Taller',
                     )),
+//                'category-search' => ['label'=>'Category Search', 'type'=>'toggle', 'separator'=>'yes', 'toggles'=>[
+//                    'no' => 'No',
+//                    'yes' => 'Yes',
+//                    ]],
+//                'category-search-layout' => ['label'=>'Search Format', 'type'=>'select', 'default'=>'table', 'options'=>[
+//                    'table' => 'Table',
+//                    'tradingcards' => 'Trading Cards',
+//                    'flexcards' => 'Flex Cards',
+//                    ]],
+                'subcategory-search' => ['label'=>'Subcategory Search', 'type'=>'toggle', 'separator'=>'yes', 'toggles'=>[
+                    'no' => 'No',
+                    'yes' => 'Yes',
+                    ]],
+                'subcategory-search-layout' => ['label'=>'Search Format', 'type'=>'select', 'options'=>[
+                    'auto' => 'Auto',
+                    'table' => 'Table',
+                    'tradingcards' => 'Trading Cards',
+                    'flexcards' => 'Flex Cards',
+                    ]],
+                'subcategory-layout' => ['label'=>'Subcategory Format', 'type'=>'toggle', 'toggles'=>[
+                    'auto' => 'Auto',
+                    'thumbs' => 'Thumbnails',
+                    'links' => 'Links',
+                    'buttons' => 'Buttons',
+                    ]],
                 ],
             ];
 /*        $sections['ciniki.reslib.category'] = [

@@ -202,6 +202,26 @@ function ciniki_reslib_wng_subcategoryProcess(&$ciniki, $tnid, &$request, $secti
     }
 
     //
+    // Check if search enabled
+    //
+    if( isset($s['subcategory-search']) && $s['subcategory-search'] == 'yes' ) {
+    error_log(print_r($s,true));
+        $api_args = [
+            'subcategory_id' => $subcategory_id,
+            'image_ratio' => isset($s['subcat-image-ratio']) ? $s['subcat-image-ratio'] : '1-1',
+            'format' => isset($s['subcategory-search-layout']) ? $s['subcategory-search-layout'] : 'table',
+            'base_url' => $base_url,
+            ];
+        $blocks[] = [
+            'type' => 'livesearch',
+            'label' => 'Search',
+            'id' => $section['sequence'],
+            'api-search-url' => $request['api_url'] . '/ciniki/reslib/search',
+            'api-args' => $api_args,
+            ];
+    }
+
+    //
     // Display the list of items
     //
     if( count($restypes) == 1 && $restypes[0] == 10 ) {

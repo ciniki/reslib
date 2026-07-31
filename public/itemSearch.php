@@ -40,7 +40,7 @@ function ciniki_reslib_itemSearch($ciniki) {
     }
 
     ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'makeKeywords');
-    $words = ciniki_core_makeKeywords($ciniki, $args['start_needle'], true);
+    $words = ciniki_core_makeKeywords($ciniki, $args['start_needle']);
     $words = preg_replace("/ /", '%', $words);
 
     //
@@ -63,13 +63,8 @@ function ciniki_reslib_itemSearch($ciniki) {
             . "items.thumbnail_image_id = images.id "
             . "AND images.tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
             . ") "
-        . "WHERE items.tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' ";
-    foreach($words as $word) {
-        $strsql .= "AND ("
-            . "items.keywords LIKE '" . ciniki_core_dbQuote($ciniki, $word) . "%' "
-            . "OR items.keywords LIKE '% " . ciniki_core_dbQuote($ciniki, $word) . "%' "
-            . ") ";
-    }
+        . "WHERE items.tnid = '" . ciniki_core_dbQuote($ciniki, $args['tnid']) . "' "
+        . "AND items.keywords like '%" . ciniki_core_dbQuote($ciniki, $words) . "%' ";
     if( isset($args['limit']) && is_numeric($args['limit']) && $args['limit'] > 0 ) {
         $strsql .= "LIMIT " . ciniki_core_dbQuote($ciniki, $args['limit']) . " ";
     } else {
