@@ -67,7 +67,7 @@ function ciniki_reslib_items($ciniki) {
                     'sequence' => $sequence,
                     ], 0x04);
                 if( $rc['stat'] != 'ok' ) {
-                    return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.reslib.75', 'msg'=>'Unable to update the item', 'err'=>$rc['err']));
+                    return array('stat'=>'fail', 'err'=>array('code'=>'ciniki.reslib.101', 'msg'=>'Unable to update the item', 'err'=>$rc['err']));
                 }
             }
             $sequence++;
