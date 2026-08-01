@@ -205,7 +205,6 @@ function ciniki_reslib_wng_subcategoryProcess(&$ciniki, $tnid, &$request, $secti
     // Check if search enabled
     //
     if( isset($s['subcategory-search']) && $s['subcategory-search'] == 'yes' ) {
-    error_log(print_r($s,true));
         $api_args = [
             'subcategory_id' => $subcategory_id,
             'image_ratio' => isset($s['subcat-image-ratio']) ? $s['subcat-image-ratio'] : '1-1',

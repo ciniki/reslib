@@ -144,8 +144,7 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
                     ];
             }
             unset($categories[$cid]['subcats']);
-// FIXME: Add page to handle category
-//            $categories[$cid]['url'] = "{$base_url}/{$cat['permalink']}";
+            $categories[$cid]['url'] = "{$base_url}/{$cat['permalink']}";
         }
     } else {
         foreach($categories as $cid => $cat) {
