@@ -51,9 +51,9 @@ function ciniki_reslib_main() {
 //                return '';
                 },
             'seqDrop':function(e,from,to){
-                if( from == 0 || to == 0 ) {
-                    return true;
-                }
+//                if( from == 0 || to == 0 ) {
+//                    return true;
+//                }
                 M.api.getJSONCb('ciniki.reslib.categoryUpdate', {'tnid':M.curTenantID, 
                     'category_id':M.ciniki_reslib_main.menu.data.categories[from].id,
                     'sequence':M.ciniki_reslib_main.menu.data.categories[to].sequence,
