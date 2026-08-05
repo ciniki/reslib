@@ -55,6 +55,7 @@ function ciniki_reslib_wng_categoryProcess(&$ciniki, $tnid, &$request, $section)
         . "categories.name, "
         . "categories.permalink, "
         . "categories.flags, "
+        . "categories.image_id, "
         . "categories.description, "
         . "sections.id AS section_id, "
         . "sections.name AS section_name, "
@@ -105,7 +106,7 @@ function ciniki_reslib_wng_categoryProcess(&$ciniki, $tnid, &$request, $section)
         $s['title'] .= ' - ' . $reslib_category['section_name'];
     }
     if( isset($s['category-permalink']) ) {
-        $s['title'] .= ' - ' . $reslib_category['category_name'];
+        $s['title'] .= ' - ' . $reslib_category['name'];
     }
 
     //
@@ -115,6 +116,7 @@ function ciniki_reslib_wng_categoryProcess(&$ciniki, $tnid, &$request, $section)
         . "subcats.name, "
         . "subcats.permalink, "
         . "subcats.image_id, "
+        . "subcats.flags, "
         . "subcats.synopsis "
         . "FROM ciniki_reslib_subcategories AS subcats "
         . "WHERE subcats.category_id = '" . ciniki_core_dbQuote($ciniki, $category_id) . "' "
@@ -150,9 +152,11 @@ function ciniki_reslib_wng_categoryProcess(&$ciniki, $tnid, &$request, $section)
         && isset($reslib_category['description']) && $reslib_category['description'] != '' 
         ) {
         $blocks[] = [
-            'type' => 'text',
+            'type' => 'contentphoto',
             'title' => $s['title'],
             'content' => $reslib_category['description'],
+            'image-id' => $reslib_category['image_id'],
+            'image-size' => isset($s['category-image-size']) ? $s['category-image-size'] : 'half',
             ];
     } 
     elseif( isset($s['title']) && $s['title'] != '' && isset($s['category-id']) && isset($s['content']) && $s['content'] != '' ) {
@@ -175,7 +179,7 @@ function ciniki_reslib_wng_categoryProcess(&$ciniki, $tnid, &$request, $section)
     if( isset($s['category-search']) && $s['category-search'] == 'yes' ) {
         $api_args = [
             'category_id' => $category_id,
-            'image_ratio' => isset($s['category-image-ratio']) ? $s['category-image-ratio'] : '1-1',
+            'image_ratio' => isset($s['thumbnail-image-ratio']) ? $s['thumbnail-image-ratio'] : '1-1',
             'format' => isset($s['category-search-layout']) ? $s['category-search-layout'] : 'table',
             'base_url' => $base_url,
             ];
@@ -194,7 +198,7 @@ function ciniki_reslib_wng_categoryProcess(&$ciniki, $tnid, &$request, $section)
     $blocks[] = [
         'type' => 'flexcards',
         'class' => 'reslib-category',
-        'image-ratio' => isset($s['category-image-ratio']) && $s['category-image-ratio'] != '' ? $s['category-image-ratio'] : '1-1',
+        'image-ratio' => isset($s['subcategory-image-ratio']) && $s['subcategory-image-ratio'] != '' ? $s['subcategory-image-ratio'] : '1-1',
         'items' => $subcats,
         ];
 

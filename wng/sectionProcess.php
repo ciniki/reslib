@@ -177,7 +177,7 @@ function ciniki_reslib_wng_sectionProcess(&$ciniki, $tnid, &$request, $section) 
     if( isset($s['section-search']) && $s['section-search'] == 'yes' ) {
         $api_args = [
             'section_id' => $section_id,
-            'image_ratio' => isset($s['subcat-image-ratio']) ? $s['subcat-image-ratio'] : '1-1',
+            'image_ratio' => isset($s['thumbnail-image-ratio']) ? $s['thumbnail-image-ratio'] : '1-1',
             'format' => isset($s['section-search-layout']) ? $s['section-search-layout'] : 'table',
             'base_url' => $base_url,
             ];

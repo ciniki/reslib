@@ -62,7 +62,14 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
                     'no' => 'No',
                     'yes' => 'Yes',
                     ]],
-                'subcat-image-ratio' => array('label' => 'Thumbnail Image Ratio', 
+                'category-image-size'=>array('label'=>'Category Intro Image Size', 'type'=>'toggle', 'default'=>'half', 'separator'=>'yes', 'toggles'=>array(
+                    'half' => 'Full',
+                    'large' => 'Large',
+                    'medium' => 'Medium',
+                    'small' => 'Small',
+                    'tiny' => 'Tiny',
+                    )),
+                'subcategory-image-ratio' => array('label' => 'Subcategory Card Image Ratio', 
                     'type'=>'select', 
                     'default'=>'1-1', 
                     'options'=>array(
@@ -83,7 +90,14 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
 //                    'tradingcards' => 'Trading Cards',
 //                    'flexcards' => 'Flex Cards',
 //                    ]],
-                'subcategory-search' => ['label'=>'Subcategory Search', 'type'=>'toggle', 'separator'=>'yes', 'toggles'=>[
+                'subcategory-image-size'=>array('label'=>'Subcategory Intro Image Size', 'type'=>'toggle', 'default'=>'half', 'separator'=>'yes', 'toggles'=>array(
+                    'half' => 'Full',
+                    'large' => 'Large',
+                    'medium' => 'Medium',
+                    'small' => 'Small',
+                    'tiny' => 'Tiny',
+                    )),
+                'subcategory-search' => ['label'=>'Subcategory Search', 'type'=>'toggle', 'toggles'=>[
                     'no' => 'No',
                     'yes' => 'Yes',
                     ]],
@@ -99,6 +113,18 @@ function ciniki_reslib_wng_sections(&$ciniki, $tnid, $args) {
                     'links' => 'Links',
                     'buttons' => 'Buttons',
                     ]],
+                'thumbnail-image-ratio' => array('label' => 'Thumbnail Image Ratio', 
+                    'type'=>'select', 
+                    'default'=>'1-1', 
+                    'options'=>array(
+                        '2-1' => 'Panoramic',
+                        '16-9' => 'Letterbox',
+                        '6-4' => 'Wider',
+                        '4-3' => 'Wide',
+                        '1-1' => 'Square',
+                        '3-4' => 'Tall',
+                        '4-6' => 'Taller',
+                    )),
                 ],
             ];
 /*        $sections['ciniki.reslib.category'] = [

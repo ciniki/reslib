@@ -55,6 +55,7 @@ function ciniki_reslib_wng_subcategoryProcess(&$ciniki, $tnid, &$request, $secti
         . "subcats.name, "
         . "subcats.permalink, "
         . "subcats.flags, "
+        . "subcats.image_id, "
         . "subcats.description, "
         . "categories.id AS category_id, "
         . "categories.name AS category_name, "
@@ -182,9 +183,11 @@ function ciniki_reslib_wng_subcategoryProcess(&$ciniki, $tnid, &$request, $secti
         && isset($reslib_subcategory['description']) && $reslib_subcategory['description'] != '' 
         ) {
         $blocks[] = [
-            'type' => 'text',
+            'type' => 'contentphoto',
             'title' => $s['title'],
             'content' => $reslib_subcategory['description'],
+            'image-id' => $reslib_subcategory['image_id'],
+            'image-size' => isset($s['subcategory-image-size']) ? $s['subcategory-image-size'] : 'half',
             ];
     } 
     elseif( isset($s['title']) && $s['title'] != '' && isset($s['subcategory-id']) && isset($s['content']) && $s['content'] != '' ) {
@@ -207,7 +210,7 @@ function ciniki_reslib_wng_subcategoryProcess(&$ciniki, $tnid, &$request, $secti
     if( isset($s['subcategory-search']) && $s['subcategory-search'] == 'yes' ) {
         $api_args = [
             'subcategory_id' => $subcategory_id,
-            'image_ratio' => isset($s['subcat-image-ratio']) ? $s['subcat-image-ratio'] : '1-1',
+            'image_ratio' => isset($s['thumbnail-image-ratio']) ? $s['thumbnail-image-ratio'] : '1-1',
             'format' => isset($s['subcategory-search-layout']) ? $s['subcategory-search-layout'] : 'table',
             'base_url' => $base_url,
             ];
@@ -232,7 +235,7 @@ function ciniki_reslib_wng_subcategoryProcess(&$ciniki, $tnid, &$request, $secti
         $blocks[] = [
             'type' => 'flexcards',
             'class' => 'reslib-subcategory',
-            'image-ratio' => isset($s['subcat-image-ratio']) && $s['subcat-image-ratio'] != '' ? $s['subcat-image-ratio'] : '1-1',
+            'image-ratio' => isset($s['thumbnail-image-ratio']) && $s['thumbnail-image-ratio'] != '' ? $s['thumbnail-image-ratio'] : '1-1',
             'items' => $items,
             ];
         
